@@ -22,6 +22,7 @@ public:
 	// Constructors
 	Quat();
 	Quat(float w, float x, float y, float z);
+	Quat(const VectorExp<3>& axis, float angle);
 	Quat(const VectorExp<4>& vec);
 
 	// Methods
