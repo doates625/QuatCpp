@@ -9,4 +9,5 @@
 #include <LinearCpp.h>
 
 // Quaternion Includess
-// TODO
+#include "QuatExp.h"
+#include "Quat.h"
