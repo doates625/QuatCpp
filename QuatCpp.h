@@ -11,3 +11,4 @@
 // Quaternion Includess
 #include "QuatExp.h"
 #include "Quat.h"
+#include "QuatConj.h"
