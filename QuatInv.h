@@ -4,7 +4,7 @@
  * @author Dan Oates (WPI Class of 2020)
  */
 #pragma once
-#include "QuatCpp.h"
+#include "QuatExp.h"
 
 /**
  * Class Declaration

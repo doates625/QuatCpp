@@ -2,7 +2,6 @@
  * @file QuatMul.cpp
  * @author Dan Oates (WPI Class of 2020)
  */
-#pragma once
 #include "QuatMul.h"
 
 /**
