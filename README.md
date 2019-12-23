@@ -34,7 +34,7 @@ All appropriate-dimensioned vector and matrix operations from LinearCpp such as 
 The full list of library operators and functions added on-top of LinearCpp are shown below:
 ```
 Quat conj(Quat q)				// Conjugation [w, -x, -y, -z]
-Quat inv(Quat q)				// Inversion conj(q) / norm(q)
+Quat inv(Quat q)				// Inversion conj(q) / norm(q)^2
 Quat operator*(Quat q1, Quat q2)		// Quaternion product q1 * q2
 Vector<3> operator*(Quat q, Vector<3> v)	// Rotation of v by q
 ```
