@@ -13,3 +13,4 @@
 #include "Quat.h"
 #include "QuatConj.h"
 #include "QuatInv.h"
+#include "QuatMul.h"
