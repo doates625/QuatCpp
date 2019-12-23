@@ -3,7 +3,7 @@ Quaternion extension of LinearCpp embedded linear algebra library
 Written by Dan Oates (WPI Class of 2020)
 
 ### Description
-This library adds quaternions to LinearCpp. The Quat class inherits from Vector<4> and has public fields for its w-, x-, y-, and z-components. Like LinearCpp, Quat operations are implemented with polymorphic expression classes to eliminate redundant copying and increase speed.
+This library adds quaternions to LinearCpp. The Quat class inherits from Vector<4> and has public fields for its w, x, y, and z components. Like LinearCpp, Quat operations are implemented with polymorphic expression classes to eliminate redundant copying and increase speed.
 
 ### API Summary
 #### Quat Class
@@ -17,10 +17,10 @@ float angle;		// Rotation angle
 // Assign values...
 
 Quat quat_unit;			// Unit quaternion [1, 0, 0, 0]
-Quat quat_wxyz(w, x, y, z);	// Quaternion [w, x, y, z]
+Quat quat_wxyz(w, x, y, z);	// Element constructor [w, x, y, z]
 Quat quat_axis(axis, angle);	// Axis-angle constructor
 ```
-The axis-angle constructor forms the quaternion which represents the rotation about the given axis by the given angle following right-hand convention. The axis is normalized internally and thus does not have to be a unit vector. The Quat class has public w, x, y, and z fields:
+The axis-angle constructor forms the quaternion which represents the rotation about the given axis unit vector by the given angle following right-hand convention. The Quat class has public w, x, y, and z fields:
 ```
 Quat quat;
 quat.w = 1.0f;
