@@ -26,6 +26,6 @@ protected:
 };
 
 /**
- * Function Declaration
+ * Operator Declaration
  */
 QuatMul operator*(const QuatExp& lhs, const QuatExp& rhs);
