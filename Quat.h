@@ -33,3 +33,9 @@ public:
 	float get_z() const override;
 	bool evaluated() const override;
 };
+
+/**
+ * Function Declarations
+ */
+Quat operator*(const Quat& lhs, const Quat& rhs);
+Vector<3> operator*(const Quat& quat, const Vector<3>& vec);
