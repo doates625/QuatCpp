@@ -34,21 +34,21 @@ Quat::Quat(float w, float x, float y, float z)
  * @param axis Axis unit vector
  * @param angle Rotation angle (right-handed)
  */
-Quat::Quat(const VectorExp<3>& axis, float angle)
+Quat::Quat(const MatrixExp<3, 1>& axis, float angle)
 {
 	float angle_half = 0.5f * angle;
 	float cos_ = cosf(angle_half);
 	float sin_ = sinf(angle_half);
 	this->w = cos_;
-	this->x = sin_ * axis.get(0);
-	this->y = sin_ * axis.get(1);
-	this->z = sin_ * axis.get(2);
+	this->x = sin_ * axis.get(0, 0);
+	this->y = sin_ * axis.get(1, 0);
+	this->z = sin_ * axis.get(2, 0);
 }
 
 /**
- * @brief Vector expression copy constructor
+ * @brief Matrix expression copy constructor
  */
-Quat::Quat(const VectorExp<4>& vec)
+Quat::Quat(const MatrixExp<4, 1>& vec)
 {
 	(*this) = vec;
 }
@@ -57,14 +57,14 @@ Quat::Quat(const VectorExp<4>& vec)
  * @brief Assignment operator
  * @return Self-reference
  */
-Quat& Quat::operator=(const VectorExp<4>& vec)
+Quat& Quat::operator=(const MatrixExp<4, 1>& vec)
 {
 	if (this != &vec)
 	{
-		this->w = vec.get(0);
-		this->x = vec.get(1);
-		this->y = vec.get(2);
-		this->z = vec.get(3);
+		this->w = vec.get(0, 0);
+		this->x = vec.get(1, 0);
+		this->y = vec.get(2, 0);
+		this->z = vec.get(3, 0);
 	}
 	return *this;
 }
@@ -123,9 +123,9 @@ Quat operator*(const Quat& lhs, const Quat& rhs)
 }
 
 /**
- * @brief Returns rotation of vector v by unit quaternion q
+ * @brief Returns rotation of vector by quaternion
  */
-Vector<3> operator*(const Quat& quat, const Vector<3>& vec)
+Matrix<3, 1> operator*(const Quat& quat, const MatrixExp<3, 1>& vec)
 {
 	// Quaternion products
 	const float qxx = quat.x * quat.x;

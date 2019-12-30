@@ -5,6 +5,8 @@
  */
 #pragma once
 #include "QuatExp.h"
+#include <VectorExp.h>
+#include <MatrixExp.h>
 
 /**
  * Class Declaration
@@ -22,11 +24,11 @@ public:
 	// Constructors
 	Quat();
 	Quat(float w, float x, float y, float z);
-	Quat(const VectorExp<3>& axis, float angle);
-	Quat(const VectorExp<4>& vec);
+	Quat(const MatrixExp<3, 1>& axis, float angle);
+	Quat(const MatrixExp<4, 1>& vec);
 
 	// Methods
-	Quat& operator=(const VectorExp<4>& vec);
+	Quat& operator=(const MatrixExp<4, 1>& vec);
 	float get_w() const override;
 	float get_x() const override;
 	float get_y() const override;
@@ -38,4 +40,4 @@ public:
  * Function Declarations
  */
 Quat operator*(const Quat& lhs, const Quat& rhs);
-Vector<3> operator*(const Quat& quat, const Vector<3>& vec);
+Matrix<3, 1> operator*(const Quat& quat, const MatrixExp<3, 1>& vec);
