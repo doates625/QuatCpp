@@ -53,4 +53,4 @@ v = Vector<3>(q1 * v);	// Correct
 ```
 
 ### Dependencies
-[LinearCpp](https://github.com/doates625/LinearCpp)
+- [LinearCpp](https://github.com/doates625/LinearCpp)
