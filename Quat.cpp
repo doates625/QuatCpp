@@ -16,17 +16,17 @@ Quat::Quat() : Quat(1.0f, 0.0f, 0.0f, 0.0f)
 
 /**
  * @brief Element constructor
- * @param w W-component
- * @param x X-component
- * @param y Y-component
- * @param z Z-component
+ * @param w_ W-component
+ * @param x_ X-component
+ * @param y_ Y-component
+ * @param z_ Z-component
  */
-Quat::Quat(float w, float x, float y, float z)
+Quat::Quat(float w_, float x_, float y_, float z_)
 {
-	this->w = w;
-	this->x = x;
-	this->y = y;
-	this->z = z;
+	w() = w_;
+	x() = x_;
+	y() = y_;
+	z() = z_;
 }
 
 /**
@@ -39,10 +39,10 @@ Quat::Quat(const MatrixExp<3, 1>& axis, float angle)
 	float angle_half = 0.5f * angle;
 	float cos_ = cosf(angle_half);
 	float sin_ = sinf(angle_half);
-	this->w = cos_;
-	this->x = sin_ * axis.get(0, 0);
-	this->y = sin_ * axis.get(1, 0);
-	this->z = sin_ * axis.get(2, 0);
+	w() = cos_;
+	x() = sin_ * axis.get(0, 0);
+	y() = sin_ * axis.get(1, 0);
+	z() = sin_ * axis.get(2, 0);
 }
 
 /**
@@ -61,94 +61,105 @@ Quat& Quat::operator=(const MatrixExp<4, 1>& vec)
 {
 	if (this != &vec)
 	{
-		this->w = vec.get(0, 0);
-		this->x = vec.get(1, 0);
-		this->y = vec.get(2, 0);
-		this->z = vec.get(3, 0);
+		w() = vec.get(0, 0);
+		x() = vec.get(1, 0);
+		y() = vec.get(2, 0);
+		z() = vec.get(3, 0);
 	}
 	return *this;
 }
 
 /**
- * @brief Gets w component
+ * @brief Gets reference to w component
  */
-float Quat::get_w() const
+float& Quat::w()
 {
-	return w;
+	return (*this)(0);
 }
 
 /**
- * @brief Gets x component
+ * @brief Gets reference to x component
  */
-float Quat::get_x() const
+float& Quat::x()
 {
-	return x;
+	return (*this)(1);
 }
 
 /**
- * @brief Gets y component
+ * @brief Gets reference to y component
  */
-float Quat::get_y() const
+float& Quat::y()
 {
-	return y;
+	return (*this)(2);
 }
 
 /**
- * @brief Gets z component
+ * @brief Gets reference to z component
  */
-float Quat::get_z() const
+float& Quat::z()
 {
-	return z;
-}
-
-/**
- * @brief Returns true to indicate evaluation
- */
-bool Quat::evaluated() const
-{
-	return true;
+	return (*this)(3);
 }
 
 /**
  * @brief Quaternion multiplication (lhs * rhs)
  */
-Quat operator*(const Quat& lhs, const Quat& rhs)
+Quat operator*(const MatrixExp<4, 1>& lhs, const MatrixExp<4, 1>& rhs)
 {
+	// LHS elements
+	const float lhs_w = lhs.get(0, 0);
+	const float lhs_x = lhs.get(1, 0);
+	const float lhs_y = lhs.get(2, 0);
+	const float lhs_z = lhs.get(3, 0);
+
+	// RHS elements
+	const float rhs_w = rhs.get(0, 0);
+	const float rhs_x = rhs.get(1, 0);
+	const float rhs_y = rhs.get(2, 0);
+	const float rhs_z = rhs.get(3, 0);
+
+	// Quaternion product
 	Quat prod;
-	prod.w = lhs.w * rhs.w - lhs.x * rhs.x - lhs.y * rhs.y - lhs.z * rhs.z;
-	prod.x = lhs.w * rhs.x + lhs.x * rhs.w + lhs.y * rhs.z - lhs.z * rhs.y;
-	prod.y = lhs.w * rhs.y - lhs.x * rhs.z + lhs.y * rhs.w + lhs.z * rhs.x;
-	prod.z = lhs.w * rhs.z + lhs.x * rhs.y - lhs.y * rhs.x + lhs.z * rhs.w;
+	prod.w() = lhs_w * rhs_w - lhs_x * rhs_x - lhs_y * rhs_y - lhs_z * rhs_z;
+	prod.x() = lhs_w * rhs_x + lhs_x * rhs_w + lhs_y * rhs_z - lhs_z * rhs_y;
+	prod.y() = lhs_w * rhs_y - lhs_x * rhs_z + lhs_y * rhs_w + lhs_z * rhs_x;
+	prod.z() = lhs_w * rhs_z + lhs_x * rhs_y - lhs_y * rhs_x + lhs_z * rhs_w;
 	return prod;
 }
 
 /**
  * @brief Returns rotation of vector by quaternion
  */
-Matrix<3, 1> operator*(const Quat& quat, const MatrixExp<3, 1>& vec)
+Vector<3> operator*(const MatrixExp<4, 1>& quat, const MatrixExp<3, 1>& vec)
 {
+	// Quaternion elements
+	const float q_w = quat.get(0, 0);
+	const float q_x = quat.get(1, 0);
+	const float q_y = quat.get(2, 0);
+	const float q_z = quat.get(3, 0);
+
 	// Quaternion products
-	const float qxx = quat.x * quat.x;
-	const float qyy = quat.y * quat.y;
-	const float qzz = quat.z * quat.z;
-	const float qwx = quat.w * quat.x;
-	const float qwy = quat.w * quat.y;
-	const float qwz = quat.w * quat.z;
-	const float qxy = quat.x * quat.y;
-	const float qxz = quat.x * quat.z;
-	const float qyz = quat.y * quat.z;
+	const float q_xx = q_x * q_x;
+	const float q_yy = q_y * q_y;
+	const float q_zz = q_z * q_z;
+	const float q_wx = q_w * q_x;
+	const float q_wy = q_w * q_y;
+	const float q_wz = q_w * q_z;
+	const float q_xy = q_x * q_y;
+	const float q_xz = q_x * q_z;
+	const float q_yz = q_y * q_z;
 
 	// Rotation matrix (1/2 scale)
 	Matrix<3, 3> rot;
-	rot(0, 0) = 0.5f - qyy - qzz;
-	rot(1, 1) = 0.5f - qxx - qzz;
-	rot(2, 2) = 0.5f - qxx - qyy;
-	rot(0, 1) = qxy - qwz;
-	rot(1, 0) = qxy + qwz;
-	rot(0, 2) = qxz + qwy;
-	rot(2, 0) = qxz - qwy;
-	rot(1, 2) = qyz - qwx;
-	rot(2, 1) = qyz + qwx;
+	rot(0, 0) = 0.5f - q_yy - q_zz;
+	rot(1, 1) = 0.5f - q_xx - q_zz;
+	rot(2, 2) = 0.5f - q_xx - q_yy;
+	rot(0, 1) = q_xy - q_wz;
+	rot(1, 0) = q_xy + q_wz;
+	rot(0, 2) = q_xz + q_wy;
+	rot(2, 0) = q_xz - q_wy;
+	rot(1, 2) = q_yz - q_wx;
+	rot(2, 1) = q_yz + q_wx;
 
 	// Final result
 	return 2.0f * (rot * vec);

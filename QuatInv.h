@@ -4,25 +4,22 @@
  * @author Dan Oates (WPI Class of 2020)
  */
 #pragma once
-#include "QuatExp.h"
+#include "MatrixExp.h"
 
 /**
  * Class Declaration
  */
-class QuatInv : public QuatExp
+class QuatInv : public MatrixExp<4, 1>
 {
 public:
-	QuatInv(const QuatExp& quat);
-	float get_w() const override;
-	float get_x() const override;
-	float get_y() const override;
-	float get_z() const override;
+	QuatInv(const MatrixExp<4, 1>& quat);
+	float get(uint8_t i, uint8_t j) const override;
 protected:
-	const QuatExp* quat;
+	const MatrixExp<4, 1>* quat;
 	float norm_inv_2;
 };
 
 /**
  * Function Declaration
  */
-QuatInv inv(const QuatExp& quat);
+QuatInv inv(const MatrixExp<4, 1>& quat);
